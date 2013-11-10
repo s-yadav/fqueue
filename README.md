@@ -95,7 +95,7 @@ fqueue is a micro-plugin to queue function execution to handle asyncronous flow 
   </table>
   <p>You can change the defauls globally like<br>
   <pre><code>
-    fqueue.defaults.autoStart=false;  
+fqueue.defaults.autoStart=false;  
    </code></pre> 
   </p>
   <p><strong>Examples</strong></p>
