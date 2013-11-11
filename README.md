@@ -19,7 +19,7 @@ fqueue is a micro-plugin to queue function execution to handle asyncronous flow 
 npm install f-queue
 	</pre>
     <br/>
-    For browser just iclude fqueue.min.js file or fqueue.js in your directory.
+    For browser just include fqueue.min.js file or fqueue.js in your directory.
   </p>
   <p><strong>Methods</strong></p>
   <table width="100%" border="0" cellspacing="0" cellpadding="10">
