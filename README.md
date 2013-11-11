@@ -277,7 +277,6 @@ function(){
     //do somthing synchronous
     console.log(this.previousResult);
     //will log 2;
-    
     return 3;
     },
 function(){
