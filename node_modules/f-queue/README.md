@@ -11,6 +11,16 @@ fqueue is a micro-plugin to queue function execution to handle asyncronous flow 
     <li>Make your code more clean (especially if you are node - mongo developer it can save you from dirty callbacks)</li>
   </ul>
   <p>** fqueue passes queue object as this in all function but be sure to store this on some variable and use that inside any callback function, because there value of this will be different.</p>
+  
+  <p><strong>Installation</strong></p>
+  <p>
+  	For node 
+    <pre>
+npm install f-queue
+	</pre>
+    <br/>
+    For browser just iclude fqueue.min.js file or fqueue.js in your directory.
+  </p>
   <p><strong>Methods</strong></p>
   <table width="100%" border="0" cellspacing="0" cellpadding="10">
     <tr>
@@ -93,7 +103,7 @@ fqueue is a micro-plugin to queue function execution to handle asyncronous flow 
   </table>
   <p>You can change the defauls globally like<br>
   <pre><code>
-fqueue.defaults.autoStart=false;  
+    fqueue.defaults.autoStart=false;  
    </code></pre> 
   </p>
   <p><strong>Examples</strong></p>
@@ -286,4 +296,3 @@ console.log(queue.results);
 queue.ignore([0,2]) //you have to give the index of function in a array which you want to ignore.
 queue.start(0); //this will ignore the first and third function.
 </pre>
-
