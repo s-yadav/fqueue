@@ -243,7 +243,6 @@ function(){
     },
 function(result){
 	 //do something
-	 
 	 $.get('get1.php',this.step);
     },
 function(result){
