@@ -21,6 +21,22 @@ npm install f-queue
     <br/>
     For browser just include fqueue.min.js file or fqueue.js in your directory.
   </p>
+
+<p><strong>Updates</strong></p>
+  <p>
+  In version 0.3.0, Added step method.
+  <br /><br /> 
+  In version 0.2.0 , code to include f-queue
+    <pre>
+var fqueue=require("f-queue");
+	</pre>
+  In version 0.1.* , code to include f-queue 
+    <pre>
+var fqueue=require("f-queue").fqueue;
+	</pre>
+</p>
+ 
+  
   <p><strong>Methods</strong></p>
   <table width="100%" border="0" cellspacing="0" cellpadding="10">
     <tr>
@@ -34,14 +50,19 @@ npm install f-queue
       <td>Execute the next method in queue.</td>
     </tr>
     <tr>
+      <td>step</td>
+      <td>Any number of arguments which you want to pass on next function of queue.</td>
+      <td>Execute the next method in queue after all functions in particular index of queue is finished. However it is different form next and complete as next and complete can't be pass directly to callback functions. Whereas step can be passed and will maintain this as fqueue object for next method. Originial this (passed on callback by any way ) will be stored on originialThis key of fqueue object. </td>
+    </tr>
+    <tr>
       <td>add</td>
-      <td>1. function * : function you want to add<br>
+      <td>1. function (mandatory) : function you want to add<br>
       2. pos&nbsp;(optional) : Index at which function will be add. If not defined, add function on last.</td>
       <td>To add function on the queue&nbsp;after initialization.</td>
     </tr>
     <tr>
       <td>remove</td>
-      <td>1. index * : Index of function which you want to remove.</td>
+      <td>1. index (mandatory) : Index of function which you want to remove.</td>
       <td>Remove a function at particular index from a queue.</td>
     </tr>
     <tr>
@@ -61,7 +82,7 @@ npm install f-queue
     </tr>
     <tr>
       <td>start</td>
-      <td><p>index * : Index at which you want to start the queue. <br>
+      <td><p>index (mandatory) : Index at which you want to start the queue. <br>
         <br>
       Any arguments starting followed by first argument will be passed to to function through which queue is starting.</p></td>
       <td>To start the queue.</td>
@@ -183,17 +204,24 @@ function(){
 
   </pre>
   <p>** However if you are using .next() method when execution of the function completes it bypass all those function which are already been called by .next() method. </p>
-  <p>To run asynchronous function you need two methods <strong><em>.hold()</em> </strong>and <em><strong>.complete()</strong></em> if autoStep is enabled or you want to run parrallel async functions, or you can use simply use next method to go next&nbsp;function in the queue after the complete of sync function.</p>
+
+  <p>To run asynchronous function you have to use one or two methods  among <strong><em>.hold()</em> </strong>, <em><strong>.complete()</strong></em> and <em><strong>.step()</strong></em>. <br/>
+You need to use .hold() method only if autoStep is enabled. <br />
+<strong><em>.hold()</em> </strong>and <em><strong>.complete()</strong></em> tells that a async function is completed and now to step to next method. While it go to next method only after executing all parallel method in particular index of queue. </br>
+
+You can also use <strong><em>.next()</em> </strong> method if there is only one function on a particular index of queue. </br>
+
+**step method can be directly passed as callback while next and and complete can't be. And this method is very handy while you are dealing of hierarchy of callbacks in node.js. 
 
   <pre>
 var queue=fqueue(
-function(){
-    queue.hold();
-    $.get('get.php',function(){
-            //do something
-            //you can pass parameter to next function 
-            queue.complete('Sudhanshu','23');
-        });
+	function(){
+		queue.hold(); //only required if autoStep option is true
+		$.get('get.php',function(){
+				//do something
+				//you can pass parameter to next function 
+				queue.complete('Sudhanshu','23');
+			});
     },
 function(name,age){
     //do somthing synchronous
@@ -206,6 +234,24 @@ function(){
         });
     }		
 );
+
+or with steps
+
+var queue=fqueue(
+function(){
+    $.get('get.php',this.step);
+    },
+function(result){
+	 //do something
+	 
+	 $.get('get1.php',this.step);
+    },
+function(result){
+   	//do something
+	console.log("queue is finished");
+    }
+);
+
 
 or
 

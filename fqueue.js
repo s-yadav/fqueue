@@ -1,10 +1,10 @@
 /*
-*fqueue.js v 0.1.0
-*Author: Sudhanshu Yadav
-*s-yadav.github.com
-*Copyright (c) 2013 Sudhanshu Yadav.
-*Licensed under MIT licenses
-*/
+ *fqueue.js v 0.3.0
+ *Author: Sudhanshu Yadav
+ *s-yadav.github.com
+ *Copyright (c) 2013 Sudhanshu Yadav.
+ *Licensed under MIT licenses
+ */
 ;(function () {
     //function to convert argument into array
     function argToArray(arg, startIdx) {
@@ -122,6 +122,18 @@
         }
         settings = merge({}, fqueue.defaults, settings);
         var newObj = new queue(settings, argToArray(arguments, funcIdx));
+
+        //define a step method which will take care of this in next function in queue while saving the incoming this on originialThis key. 
+        newObj.step = function () {
+            var self = newObj;
+            self.originialThis = this;
+            self.left--;
+
+            if (self.left == 0) {
+                self.paused = false;
+                self.next.apply(self, argToArray(arguments));
+            }
+        }
 
         if (settings.autoStart) {
             var params = [0].concat(settings.startParams);
