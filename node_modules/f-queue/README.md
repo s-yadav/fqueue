@@ -40,9 +40,9 @@ var fqueue=require("f-queue").fqueue;
   <p><strong>Methods</strong></p>
   <table width="100%" border="0" cellspacing="0" cellpadding="10">
     <tr>
-      <td width="27%">Methods</td>
-      <td width="73%">Parameters</td>
-      <td width="73%">Description</td>
+      <td width="20%">Methods</td>
+      <td width="35%">Parameters</td>
+      <td width="45%">Description</td>
     </tr>
     <tr>
       <td>next</td>
