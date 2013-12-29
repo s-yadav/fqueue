@@ -17,15 +17,18 @@
             target = arg[0];
         for (var i = 1, ln = arg.length; i < ln; i++) {
             var obj = arg[i];
-            for (var k in obj)
-                target[k] = obj[k];
+            for (var k in obj) {
+                if (obj.hasOwnProperty(k)) {
+                    target[k] = obj[k];
+                }
+            }
         }
         return target;
     }
 
     function index(ary, elm) {
         for (var i = 0, ln = ary.length; i < ln; i++) {
-            if (ary[i] == elm) return i
+            if (ary[i] == elm) return i;
         }
         return -1;
     }
@@ -56,7 +59,7 @@
                     result = [];
                     left = func.length;
                     for (var i = 0; i < left; i++) {
-                        result.push(func[i].apply(this, argToArray(arguments)))
+                        result.push(func[i].apply(this, argToArray(arguments)));
                     }
                 }
                 this.left = left;
@@ -65,12 +68,12 @@
             }
             //need to check when this next should be called.
             if (this.autoStep && !this.paused) {
-                this.next()
+                this.next();
             }
         },
         complete: function () {
             this.left--;
-            if (this.left == 0) {
+            if (this.left === 0) {
                 this.paused = false;
                 //in this way if there are two asynchronous both passing arguments than only one will go
                 //so both must pass same type of arguments
@@ -111,7 +114,7 @@
         ignore: function (idxAry) {
             this.ignoreIdxs = idxAry;
         }
-    }
+    };
 
     var fqueue = function (option) {
         var settings = option,
@@ -129,11 +132,11 @@
             self.originialThis = this;
             self.left--;
 
-            if (self.left == 0) {
+            if (self.left === 0) {
                 self.paused = false;
                 self.next.apply(self, argToArray(arguments));
             }
-        }
+        };
 
         if (settings.autoStart) {
             var params = [0].concat(settings.startParams);
@@ -141,13 +144,13 @@
         }
         return newObj;
 
-    }
+    };
     //defaults
     fqueue.defaults = {
         autoStart: true,
         autoStep: true,
         startParams: []
-    }
+    };
 
     //to make fqueue globally accessible
     window.fqueue = fqueue;
