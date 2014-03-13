@@ -1,7 +1,7 @@
 fqueue
 ======
 
-fqueue is a micro-plugin to queue function execution to handle asynchronous flow and stepping though functions.
+fqueue is a micro-plugin to queue function execution to handle asynchronous flow and stepping through functions.
   <ul>
     <li> It support adding or removing of function after initialization of queue.</li>
     <li>Support storing of data which can be used to all function whithin that queue</li>
