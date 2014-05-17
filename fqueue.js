@@ -1,5 +1,5 @@
 /*
- *fqueue.js v 0.3.0
+ *fqueue.js v 0.3.2
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
@@ -48,8 +48,9 @@
         next: function () {
             var curIdx = ++this.current,
                 func = this.func[curIdx],
-                result,
-                left = 1;
+                result;
+            
+			this.left = 1;
 
             if (!func) return;
             if (index(this.ignoreIdxs, curIdx) == -1) {
@@ -57,12 +58,11 @@
                     result = func.apply(this, argToArray(arguments));
                 } else {
                     result = [];
-                    left = func.length;
+                    var left = this.left =  func.length;
                     for (var i = 0; i < left; i++) {
                         result.push(func[i].apply(this, argToArray(arguments)));
                     }
                 }
-                this.left = left;
                 this.previousResult = result;
                 this.results[curIdx] = result;
             }
@@ -77,9 +77,7 @@
                 this.paused = false;
                 //in this way if there are two asynchronous both passing arguments than only one will go
                 //so both must pass same type of arguments
-                if (this.autoStep) {
-                    this.next.apply(this, argToArray(arguments));
-                }
+                this.next.apply(this, argToArray(arguments));
             }
         },
         hold: function () {
@@ -153,5 +151,5 @@
     };
 
     //to make fqueue globally accessible
-    window.fqueue = fqueue;
+    window.exports = fqueue;
 }());
