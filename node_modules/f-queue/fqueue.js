@@ -1,5 +1,5 @@
 /*
- *fqueue.js v 0.3.2
+ *fqueue.js v 0.3.3
  *Author: Sudhanshu Yadav
  *s-yadav.github.com
  *Copyright (c) 2013 Sudhanshu Yadav.
@@ -91,7 +91,7 @@
             this.results = [];
             this.previousResult = null;
             this.current = index - 1;
-            this.next(argToArray(arguments, 1));
+            this.next.apply(this,argToArray(arguments, 1));
         },
         stop: function () {
             this.autoStep = false;
