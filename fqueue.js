@@ -151,5 +151,5 @@
     };
 
     //to make fqueue globally accessible
-    window.exports = fqueue;
+    window.fqueue = fqueue;
 }());
